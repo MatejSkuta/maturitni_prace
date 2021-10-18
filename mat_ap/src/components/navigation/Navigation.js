@@ -3,7 +3,7 @@ import React from 'react';
 function Navigation() {
   return (
     <div>
-    <h1>Ahoj</h1> 
+    <h1>Navigace</h1> 
     </div>
   );
 }
