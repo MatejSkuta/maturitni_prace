@@ -1,0 +1,19 @@
+.policko {
+  color: rgb(0, 0, 0);
+  margin: 5px;
+  font-size: 50px;
+  width: 15px;
+  height: 15px;
+}
+.pismena {
+  background-color: #ff0000;
+  color: #ffffff;
+  border-color: rgb(0 0 0);
+  border-radius: 20%;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+}
