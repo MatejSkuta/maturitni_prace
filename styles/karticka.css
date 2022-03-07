@@ -1,0 +1,28 @@
+.karticka {
+  width: 100px;
+  height: 100px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  margin: 10px 10px 10px 10px;
+  float: left;
+  position: relative;
+  cursor: pointer;
+  border: 0;
+}
+.rub {
+  background: rgb(255, 0, 0);
+}
+.lic {
+  background: rgb(0, 255, 0);
+  cursor: none;
+}
+.uhodnuta {
+  background: rgb(0, 0, 0);
+  color: white;
+  cursor: pointer;
+  opacity: 0.3;
+}
+.napis {
+  font-size: 25px;
+}
