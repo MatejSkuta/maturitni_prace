@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import bcrypt from "bcryptjs/dist/bcrypt";
 
 const hashPassword = async (password, hash) => {
+  console.log(hash);
   return new Promise((resolve, reject) => {
     bcrypt.hash(password, hash, function (err, hashed) {
       if (err) reject(err);
