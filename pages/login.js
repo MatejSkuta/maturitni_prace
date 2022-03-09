@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import bcrypt from "bcryptjs/dist/bcrypt";
+import router, { useRouter } from "next/router";
 
 const hashPassword = async (password, hash) => {
   console.log(hash);
@@ -81,7 +82,7 @@ const Login = ({ hash }) => {
             nickname: uzivatelskejmeno,
             jmeno: jmeno,
             prijmeni: prijmeni,
-            datum_registrace: new Date(),
+            datum_registrace: new Date().toISOString(),
           },
         }),
         headers: {
@@ -90,16 +91,17 @@ const Login = ({ hash }) => {
       });
       const data = await response.json();
       console.log(data);
+      router.push("/signup");
     }
   };
   return (
     <div>
       <h1>Registrace</h1>
       <form>
-        <div class="form-group">
+        <div className="form-group">
           <input
             type="email"
-            class="form-control input"
+            className="form-control input"
             placeholder="email"
             value={email}
             onChange={(e) => {
@@ -108,10 +110,10 @@ const Login = ({ hash }) => {
           />
           {emailExist && <span className="error">Email již existuje</span>}
         </div>
-        <div class="form-group">
+        <div className="form-group">
           <input
             type="text"
-            class="form-control input"
+            className="form-control input"
             placeholder="uživatelské jméno"
             value={uzivatelskejmeno}
             onChange={(e) => {
@@ -122,10 +124,10 @@ const Login = ({ hash }) => {
             <span className="error">Uživatelské jméno již existuje</span>
           )}
         </div>
-        <div class="form-group">
+        <div className="form-group">
           <input
             type="text"
-            class="form-control input"
+            className="form-control input"
             placeholder="jméno"
             value={jmeno}
             onChange={(e) => {
@@ -133,10 +135,10 @@ const Login = ({ hash }) => {
             }}
           />
         </div>
-        <div class="form-group">
+        <div className="form-group">
           <input
             type="text"
-            class="form-control input"
+            className="form-control input"
             placeholder="příjmení"
             value={prijmeni}
             onChange={(e) => {
@@ -144,10 +146,10 @@ const Login = ({ hash }) => {
             }}
           />
         </div>
-        <div class="form-group">
+        <div className="form-group">
           <input
             type="password"
-            class="form-control input"
+            className="form-control input"
             placeholder="heslo"
             value={heslo}
             onChange={(e) => {
@@ -158,10 +160,10 @@ const Login = ({ hash }) => {
             <span className="error">Hesla se neshodují !!!</span>
           )}
         </div>
-        <div class="form-group">
+        <div className="form-group">
           <input
             type="password"
-            class="form-control input"
+            className="form-control input"
             placeholder="ověření hesla"
             value={overenihesla}
             onChange={(e) => {
@@ -170,7 +172,7 @@ const Login = ({ hash }) => {
           />
         </div>
       </form>
-      <button class="btn btn-primary" onClick={handleRegistration}>
+      <button className="btn btn-primary" onClick={handleRegistration}>
         Registrovat se
       </button>
       <br></br>

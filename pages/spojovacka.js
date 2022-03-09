@@ -44,25 +44,13 @@ const data = [
   },
 ];
 const Spojovacka = () => {
-  const [shuffle, setShuffle] = useState(
-    data.sort(() => 0.5 - Math.random()).slice(4)
-  );
-  const slovicka = shuffle.map((x) => x.trans);
-  const [randomslovo, setRandomslovo] = useState(
-    slovicka[Math.floor(Math.random() * slovicka.length)]
-  );
-  console.log(shuffle.length);
-  const [words, setWords] = useState(
-    shuffle
-      .map((x) => ({ id: x.id, word: x.word }))
-      .sort(() => 0.5 - Math.random())
-  );
-  const trans = shuffle.map((x) => ({ id: x.id, word: x.trans }));
-  console.log(words);
-  console.log(trans);
-  const [selected_value, setSelected_value] = useState(
-    Array.from(Array(words.length)).map(() => undefined)
-  );
+  const [shuffle, setShuffle] = useState();
+  //console.log(shuffle.length);
+  const [words, setWords] = useState();
+  const [trans, setTrans] = useState();
+  console.log(shuffle);
+  //console.log(trans);
+  const [selected_value, setSelected_value] = useState();
   const [dobre, setDobre] = useState(0);
   const [spatne, setSpatne] = useState(0);
   const [stav, setStav] = useState(false);
@@ -72,24 +60,42 @@ const Spojovacka = () => {
     kopie[index] = value;
     setSelected_value(kopie);
   };
+  useEffect(() => {
+    setShuffle(data.sort(() => 0.5 - Math.random()).slice(4));
+  }, []);
+  useEffect(() => {
+    if (shuffle) {
+      setWords(
+        shuffle
+          .map((x) => ({ id: x.id, word: x.word }))
+          .sort(() => 0.5 - Math.random())
+      );
+      setTrans(shuffle.map((x) => ({ id: x.id, word: x.trans })));
+    }
+  }, [shuffle]);
+  useEffect(() => {
+    if (words)
+      setSelected_value(Array.from(Array(words.length)).map(() => undefined));
+  }, [words]);
   return (
     <div>
       {stav === false && (
         <div>
-          {trans.map((y, i) => {
-            return (
-              <div>
-                {y.word}
-                <SpojovackaSlovo
-                  wordlist={words}
-                  trans={y.word}
-                  word={shuffle[i].word}
-                  onChange={(value) => correct(i, value)}
-                />
-                {console.log(selected_value)}
-              </div>
-            );
-          })}
+          {trans &&
+            trans.map((y, i) => {
+              return (
+                <div>
+                  {y.word}
+                  <SpojovackaSlovo
+                    wordlist={words}
+                    trans={y.word}
+                    word={shuffle[i].word}
+                    onChange={(value) => correct(i, value)}
+                  />
+                  {console.log(selected_value)}
+                </div>
+              );
+            })}
           <br></br>
           <input
             type="submit"
@@ -127,6 +133,16 @@ const Spojovacka = () => {
               setStav(false);
               setDobre(0);
               setSpatne(0);
+              setSelected_value(
+                Array.from(Array(words.length)).map(() => undefined)
+              );
+              setShuffle(data.sort(() => 0.5 - Math.random()).slice(4));
+              setWords(
+                shuffle
+                  .map((x) => ({ id: x.id, word: x.word }))
+                  .sort(() => 0.5 - Math.random())
+              );
+              setTrans(shuffle.map((x) => ({ id: x.id, word: x.trans })));
             }}
           />
         </div>

@@ -5,17 +5,27 @@ export const useLocalStorage = (key, initialValue) => {
   // Pass initial state function to useState so logic is only executed once
   const [storedValue, setStoredValue] = useState(() => {
     if (typeof window === "undefined") {
-      return initialValue;
+      const x = JSON.parse(initialValue);
+      console.log("0:" + typeof x);
+      return x;
     }
     try {
       // Get from local storage by key
       const item = window.localStorage.getItem(key);
       // Parse stored json or if none return initialValue
-      return item ? JSON.parse(item) : initialValue;
+
+      const x = JSON.parse(item);
+      console.log("1:" + typeof x);
+      const y = JSON.parse(initialValue);
+      console.log("2:" + typeof y);
+      return item ? x : y;
     } catch (error) {
       // If error also return initialValue
       console.log(error);
-      return initialValue;
+
+      const z = JSON.parse(initialValue);
+      console.log("3:" + typeof z);
+      return z;
     }
   });
   // Return a wrapped version of useState's setter function that ...
@@ -23,10 +33,9 @@ export const useLocalStorage = (key, initialValue) => {
   const setValue = (value) => {
     try {
       // Allow value to be a function so we have same API as useState
-      const valueToStore =
-        value instanceof Function ? value(storedValue) : value;
+      const valueToStore = value;
       // Save state
-      setStoredValue(valueToStore);
+      setStoredValue(JSON.stringify(valueToStore));
       // Save to local storage
       if (typeof window !== "undefined") {
         window.localStorage.setItem(key, JSON.stringify(valueToStore));

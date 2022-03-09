@@ -1,6 +1,8 @@
 import React, { useState, useContext } from "react";
 import bcrypt from "bcryptjs/dist/bcrypt";
 import UserContext from "../components/userContext";
+import { set } from "react-hook-form";
+import router, { useRouter } from "next/router";
 
 const hashPassword = async (password, hash) => {
   return new Promise((resolve, reject) => {
@@ -13,9 +15,8 @@ const hashPassword = async (password, hash) => {
 
 const Signup = ({ hash }) => {
   const { user, setUser } = useContext(UserContext);
-
-  const [email, setEmail] = useState("neco@email.com");
-  const [heslo, setHeslo] = useState("123456");
+  const [email, setEmail] = useState("admin@email.cz");
+  const [heslo, setHeslo] = useState("admin");
   const [jmeno, setJmeno] = useState();
   const [prijmeni, setPrijmeni] = useState();
   const [uzivatelskejmeno, setUzivatelskejmeno] = useState();
@@ -37,20 +38,25 @@ const Signup = ({ hash }) => {
         "Content-Type": "application/json",
       },
     });
-    response.json().then(({ user }) => {
-      console.log(user);
-      if (Object.keys(user).length === 0) {
+    response.json().then((data) => {
+      const u = data.user;
+      // console.log(u);
+      //delete u.heslo;
+      // console.log(u);
+      if (Object.keys(u).length === 0) {
         setLoginfailed(true);
         setJmeno();
         setPrijmeni();
         setUzivatelskejmeno();
         console.log(true);
       } else {
-        setUser(user.email);
-        setJmeno(user.jmeno);
-        setPrijmeni(user.prijmeni);
-        setUzivatelskejmeno(user.nickname);
+        console.log("jsem uložený");
+        setUser(u);
+        setJmeno(u.jmeno);
+        setPrijmeni(u.prijmeni);
+        setUzivatelskejmeno(u.nickname);
         setLoginfailed(false);
+        router.push("/");
       }
     });
   };
@@ -59,7 +65,7 @@ const Signup = ({ hash }) => {
     <div>
       <h1>Přihlášení:</h1>
       <form>
-        <div class="form-group">
+        <div className="form-group">
           <input
             type="email"
             placeholder="email"
@@ -69,7 +75,7 @@ const Signup = ({ hash }) => {
             }}
           />
         </div>
-        <div class="form-group">
+        <div className="form-group">
           <input
             type="password"
             placeholder="heslo"
@@ -80,13 +86,10 @@ const Signup = ({ hash }) => {
           />
         </div>
       </form>
-      <button class="btn btn-primary" onClick={check}>
+      <button className="btn btn-primary" onClick={check}>
         Přihlásit se
       </button>
-      {loginfailed && <p>špatně zadané údaje</p>}
-      {uzivatelskejmeno && <p>uživatelské jméno:{uzivatelskejmeno}</p>}
-      {jmeno && <p>Jméno: {jmeno}</p>}
-      {prijmeni && <p>Příjmení: {prijmeni}</p>}
+      {loginfailed && <p>špatně zadané údaje nebo účet neexistuje</p>}
     </div>
   );
 };
