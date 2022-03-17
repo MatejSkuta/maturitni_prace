@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import bcrypt from "bcryptjs/dist/bcrypt";
 import UserContext from "../components/userContext";
 import { set } from "react-hook-form";
-import router, { useRouter } from "next/router";
+import router from "next/router";
 
 const hashPassword = async (password, hash) => {
   return new Promise((resolve, reject) => {
@@ -51,7 +51,7 @@ const Signup = ({ hash }) => {
         console.log(true);
       } else {
         console.log("jsem uložený");
-        setUser(u);
+        setUser(u.email);
         setJmeno(u.jmeno);
         setPrijmeni(u.prijmeni);
         setUzivatelskejmeno(u.nickname);

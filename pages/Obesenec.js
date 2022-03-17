@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
+import UserContext from "../components/userContext";
 
-const data = [
+/*const data = [
   {
     id: 1,
     word: "auto",
@@ -42,12 +43,31 @@ const data = [
     word: "hlava",
     trans: "head",
   },
-];
+];*/
 
 const Obesenec = () => {
+  const { user, setUser } = useContext(UserContext);
+
+  const slovickaTable = async () => {
+    let url = "/api/slovicka";
+    const params = {
+      method: "SelectByLanguage",
+      ID_jazyka: 1,
+    };
+    const response = await fetch(
+      url + "?" + new URLSearchParams(params).toString(),
+      { method: "GET" }
+    );
+    const json = await response.json();
+    setData(json.slovicka);
+    console.log(json.slovicka);
+    console.log("profil page");
+  };
+
   const [pocet, setPocet] = useState(0);
   //const [slovo, setSlovo] = useState("");
   const [konecne_slovo, setKonecneslovo] = useState("");
+  const [data, setData] = useState(null);
   const [spravne, setSpravne] = useState(0);
   const [misto, setMisto] = useState([]);
   const [b, setB] = useState();
@@ -59,10 +79,26 @@ const Obesenec = () => {
     setB("");
   };
   const alphabet = alpha.map((x) => String.fromCharCode(x));
-  const words = data.map((x) => ({ id: x.id, word: x.word }));
-  const trans = data.map((x) => ({ id: x.id, word: x.trans }));
-  const slovicka = data.map((x) => x.trans);
+  let words;
+  let trans;
+  let slovicka;
+  if (data) {
+    words = data.map((x) => ({
+      id: x.ID_slovicka,
+      word: x.cesky,
+    }));
+    trans = data.map((x) => ({ id: x.ID_slovicka, word: x.preklad }));
+    slovicka = data.map((x) => x.preklad);
+    console.log(slovicka);
+  }
 
+  useEffect(() => {
+    if (user) {
+      slovickaTable();
+    } else {
+      router.push("/");
+    }
+  }, []);
   return (
     <div>
       <img

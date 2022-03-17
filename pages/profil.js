@@ -1,44 +1,68 @@
 import React, { useState, useContext, useEffect } from "react";
 import UserContext from "../components/userContext";
 import bcrypt from "bcryptjs/dist/bcrypt";
+import router from "next/router";
 
 const Profil = () => {
   const { user, setUser } = useContext(UserContext);
-  const [isloading, setIsloading] = useState(true);
+
+  const [users, setUsers] = useState(null);
   /*const [email, setEmail] = useState();
   const [jmeno, setJmeno] = useState();
   const [prijmeni, setPrijmeni] = useState();
   const [uzivatelskejmeno, setUzivatelskejmeno] = useState();
   */
-  const [datum_registrace, setDatum_registrace] = useState();
 
-  const [stareHeslo, setStareHeslo] = useState();
-  const [noveHeslo, setNoveHeslo] = useState();
-  const [potvrditHeslo, setPotvrditHeslo] = useState();
-  console.log("profil page");
-  console.log(user);
+  const userTable = async () => {
+    let url = "/api/uzivatel";
+    const params = {
+      method: "signup",
+      email: user,
+    };
+    const response = await fetch(
+      url + "?" + new URLSearchParams(params).toString(),
+      { method: "GET" }
+    );
+    const json = await response.json();
+    setUsers(json.user);
+    console.log(typeof json);
+    console.log("profil page");
+  };
+  /*useEffect(() => {
+    userTable();
+  }, []);*/
+
+  useEffect(() => {
+    if (user) {
+      userTable();
+    } else {
+      router.push("/");
+    }
+  }, []);
   useEffect(() => {
     console.log("userchage");
-    setIsloading(false);
-  }, [user]);
+
+    console.log(users);
+  }, [users]);
   return (
-    !isloading && (
-      <div>
-        <h1>Profil:</h1>
-        {user && (
+    <div>
+      {users && (
+        <div>
+          <h1>Profil:</h1>
+
           <div>
-            <p>Email: {user.email}</p>
-            <p>Jméno: {user.jmeno}</p>
-            <p>Příjmení: {user.prijmeni}</p>
-            <p>Nickname: {user.nickname}</p>
+            <p>Email: {users.email}</p>
+            <p>Uživatelské jméno: {users.nickname} </p>
+            <p>Jméno: {users.jmeno}</p>
+            <p>Příjmení: {users.prijmeni}</p>
             <p>
-              Datum registrace:
-              {new Date(user.datum_registrace).toLocaleDateString()}
+              Datum Registrace:{" "}
+              {new Date(users.datum_registrace).toLocaleDateString()}
             </p>
           </div>
-        )}
-      </div>
-    )
+        </div>
+      )}
+    </div>
   );
 };
 

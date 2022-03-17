@@ -53,10 +53,17 @@ function Navigation() {
       <div className="navbar-collapse collapse w-100 order-3 dual-collapse2">
         {!isloading && (
           <ul className="navbar-nav ml-auto">
-            {user && user.nickname === "admin" && (
+            {user && user === "admin@email.cz" && (
               <li className="nav-item active">
-                <a href="/administrace" className="nav-link">
-                  Administrace
+                <a href="/administraceUzivatelu" className="nav-link">
+                  Administrace uživatelů
+                </a>
+              </li>
+            )}
+            {user && user === "admin@email.cz" && (
+              <li className="nav-item active">
+                <a href="/administraceSlovicek" className="nav-link">
+                  Administrace slovíček
                 </a>
               </li>
             )}
