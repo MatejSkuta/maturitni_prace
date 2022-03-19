@@ -46,7 +46,7 @@ import UserContext from "../components/userContext";
 
 const Hadani = () => {
   const { user, setUser } = useContext(UserContext);
-
+  const [users, setUsers] = useState(null);
   const slovickaTable = async () => {
     let url = "/api/slovicka";
     const params = {
@@ -62,6 +62,41 @@ const Hadani = () => {
     console.log(json.slovicka);
     console.log("profil page");
   };
+  const userTable = async () => {
+    let url = "/api/uzivatel";
+    const params = {
+      method: "signup",
+      email: user,
+    };
+    const response = await fetch(
+      url + "?" + new URLSearchParams(params).toString(),
+      { method: "GET" }
+    );
+    const json = await response.json();
+    setUsers(json.user);
+    console.log(typeof json);
+    console.log("profil page");
+  };
+  const statistika = async (e) => {
+    const response = await fetch("/api/statistika", {
+      method: "POST",
+      body: JSON.stringify({
+        user: {
+          pocet_uspechu: vysledekspravne,
+          celkovy_pocet: nastavenypocet,
+          datum_zacatku: datum,
+          datum_konce: new Date().toISOString(),
+          ID_uzivatel: users.ID_uzivatel,
+        },
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+    console.log(data);
+  };
+
   const [words, setWords] = useState();
   const [trans, setTrans] = useState();
   const [data, setData] = useState([]);
@@ -72,6 +107,7 @@ const Hadani = () => {
   const [vysledekspravne, setVysledekspravne] = useState(0);
   const [vysledekspatne, setVysledekspatne] = useState(0);
   const [randomslovo, setRandomslovo] = useState(0);
+  const [datum, setDatum] = useState();
 
   const kontrola = () => {
     //console.log(slovo + " == " + words[randomslovo].word);
@@ -82,20 +118,26 @@ const Hadani = () => {
     }
     setRandomslovo(randomslovo + 1);
     setPocet(pocet - 1);
-    if (pocet === 1) setStav(true);
+    if (pocet === 1) {
+      setStav(true);
+    }
   };
   useEffect(() => {
     if (user) {
       slovickaTable();
+      userTable();
     } else {
       router.push("/");
     }
   }, []);
 
+  useEffect(() => {
+    if (stav) statistika();
+  }, [stav]);
   const generateWords = (nastavenypocet) => {
     const selected = data
       .sort(() => Math.random() - 0.5)
-      .slice(0, nastavenypocet + 1);
+      .slice(0, nastavenypocet);
 
     console.log(selected);
     setWords(
@@ -107,11 +149,12 @@ const Hadani = () => {
     setTrans(selected.map((x) => ({ id: x.ID_slovicka, word: x.preklad })));
     setRandomslovo(0);
   };
+
   return (
     <div>
       {stav === false && pocet === 0 && (
         <div>
-          <label>Nastavte počet pokusů </label>
+          <label>Nastavte počet pokusů min(5) </label>
           <input
             type="number"
             name="pocet"
@@ -121,6 +164,8 @@ const Hadani = () => {
               if (e.target.value > data.length) {
                 setNastavenypocet(data.length);
                 console.log(nastavenypocet);
+              } else if (e.target.value < 5) {
+                setNastavenypocet(5);
               } else {
                 setNastavenypocet(e.target.value);
               }
@@ -132,6 +177,7 @@ const Hadani = () => {
               setVysledekspravne(0);
               setPocet(nastavenypocet);
               generateWords(nastavenypocet);
+              setDatum(new Date().toISOString());
             }}
           >
             Click

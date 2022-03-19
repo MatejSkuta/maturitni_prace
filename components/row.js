@@ -1,4 +1,5 @@
 import React from "react";
+import DateTime from "tedious/lib/data-types/datetime";
 
 const renderUser = (Data, deleteUser) => (
   <tr>
@@ -25,7 +26,24 @@ const renderSlovicka = (Data, deleteSlovicka) => (
     </td>
   </tr>
 );
-const Row = ({ userData, setIsupdate, slovickaData }) => {
+const renderStatistika = (Data) => (
+  <tr>
+    <td>{Data.celkovy_pocet - Data.pocet_uspechu}</td>
+    <td>{Data.pocet_uspechu}</td>
+    <td>{Data.celkovy_pocet}</td>
+    <td>{(Data.pocet_uspechu / Data.celkovy_pocet) * 100}%</td>
+    <td>
+      {Math.round(
+        (new Date(Data.datum_konce).getTime() -
+          new Date(Data.datum_zacatku).getTime()) /
+          1000
+      )}{" "}
+      sekund
+    </td>
+    <td>{new Date(Data.datum_konce).toLocaleString()}</td>
+  </tr>
+);
+const Row = ({ userData, setIsupdate, slovickaData, statistikaData }) => {
   const deleteUser = async () => {
     let url = "/api/uzivatel";
     const response = await fetch(url, {
@@ -50,9 +68,12 @@ const Row = ({ userData, setIsupdate, slovickaData }) => {
     console.log(json);
     setIsupdate(true);
   };
-  return userData
-    ? renderUser(userData, () => deleteUser())
-    : renderSlovicka(slovickaData, () => deleteSlovicka());
+  let render = null;
+  if (userData) render = renderUser(userData, () => deleteUser());
+  else if (slovickaData)
+    render = renderSlovicka(slovickaData, () => deleteSlovicka());
+  else if (statistikaData) render = renderStatistika(statistikaData);
+  return render;
 };
 
 export default Row;

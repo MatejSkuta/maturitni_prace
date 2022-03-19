@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Karticka from "../components/karticka";
-const data = [
+import UserContext from "../components/userContext";
+/*const data = [
   {
     id: 1,
     word: "auto",
@@ -42,10 +43,27 @@ const data = [
     word: "hlava",
     trans: "head",
   },
-];
+];*/
 const Pexeso = () => {
-  const words = data.map((x) => ({ id: x.id, word: x.word }));
-  const trans = data.map((x) => ({ id: x.id, word: x.trans }));
+  const { user, setUser } = useContext(UserContext);
+  const slovickaTable = async () => {
+    let url = "/api/slovicka";
+    const params = {
+      method: "SelectByLanguage",
+      ID_jazyka: 1,
+    };
+    const response = await fetch(
+      url + "?" + new URLSearchParams(params).toString(),
+      { method: "GET" }
+    );
+    const json = await response.json();
+    setData(json.slovicka.sort(() => Math.random() - 0.5).slice(0, 8));
+    console.log(json.slovicka);
+    console.log("profil page");
+  };
+  const [data, setData] = useState([]);
+  const [trans, setTrans] = useState();
+  const [words, setWords] = useState();
   const [wordlist, setWordlist] = useState([]);
   const [arrayvisibles, setArrayvisibles] = useState(
     Array.from(Array(16)).map(() => false)
@@ -84,9 +102,31 @@ const Pexeso = () => {
       } else setTimeout(() => resetvisibility(), 2000);
     }
   };
+  const Restart = () => {
+    setArrayvisibles(arrayvisibles.map(() => false));
+    slovickaTable();
+  };
   useEffect(() => {
-    setWordlist(words.concat(trans).sort(() => 0.5 - Math.random()));
+    if (user) {
+      slovickaTable();
+    }
   }, []);
+
+  useEffect(() => {
+    setWords(data.map((x) => ({ id: x.ID_slovicka, word: x.cesky })));
+    setTrans(data.map((x) => ({ id: x.ID_slovicka, word: x.preklad })));
+    /*setSlovicka(data.map((x) => x.preklad));
+      console.log(slovicka);*/
+  }, [data]);
+  useEffect(() => {
+    if (words) {
+      console.log(data);
+      console.log(words);
+      console.log(trans);
+      setWordlist(words.concat(trans).sort(() => 0.5 - Math.random()));
+    }
+  }, [words]);
+
   return (
     <div>
       <div id="content">
@@ -108,6 +148,15 @@ const Pexeso = () => {
             </div>
           );
         })}
+        {arrayvisibles.every((x) => x === null) && (
+          <button
+            onClick={() => {
+              Restart();
+            }}
+          >
+            Restart
+          </button>
+        )}
       </div>
     </div>
   );

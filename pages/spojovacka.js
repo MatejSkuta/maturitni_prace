@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
 import SpojovackaSlovo from "../components/spojovacka_slovo.js";
-const data = [
+import React, { useState, useEffect, useContext } from "react";
+import UserContext from "../components/userContext";
+/*const data = [
   {
     id: 1,
     word: "auto",
@@ -42,8 +43,10 @@ const data = [
     word: "hlava",
     trans: "head",
   },
-];
+];*/
 const Spojovacka = () => {
+  const { user, setUser } = useContext(UserContext);
+  const [data, setData] = useState([]);
   const [shuffle, setShuffle] = useState();
   //console.log(shuffle.length);
   const [words, setWords] = useState();
@@ -54,29 +57,49 @@ const Spojovacka = () => {
   const [dobre, setDobre] = useState(0);
   const [spatne, setSpatne] = useState(0);
   const [stav, setStav] = useState(false);
-
+  const slovickaTable = async () => {
+    let url = "/api/slovicka";
+    const params = {
+      method: "SelectByLanguage",
+      ID_jazyka: 1,
+    };
+    const response = await fetch(
+      url + "?" + new URLSearchParams(params).toString(),
+      { method: "GET" }
+    );
+    const json = await response.json();
+    setData(json.slovicka);
+    console.log(json.slovicka);
+    console.log("profil page");
+  };
   const correct = (index, value) => {
     let kopie = [...selected_value];
     kopie[index] = value;
     setSelected_value(kopie);
   };
   useEffect(() => {
-    setShuffle(data.sort(() => 0.5 - Math.random()).slice(4));
-  }, []);
+    if (data) setShuffle(data.sort(() => 0.5 - Math.random()).slice(0, 4));
+  }, [data]);
   useEffect(() => {
     if (shuffle) {
       setWords(
         shuffle
-          .map((x) => ({ id: x.id, word: x.word }))
+          .map((x) => ({ id: x.ID_slovicka, word: x.cesky }))
           .sort(() => 0.5 - Math.random())
       );
-      setTrans(shuffle.map((x) => ({ id: x.id, word: x.trans })));
+      setTrans(shuffle.map((x) => ({ id: x.ID_slovicka, word: x.preklad })));
     }
   }, [shuffle]);
   useEffect(() => {
     if (words)
       setSelected_value(Array.from(Array(words.length)).map(() => undefined));
   }, [words]);
+
+  useEffect(() => {
+    if (user) {
+      slovickaTable();
+    }
+  }, []);
   return (
     <div>
       {stav === false && (
@@ -89,7 +112,7 @@ const Spojovacka = () => {
                   <SpojovackaSlovo
                     wordlist={words}
                     trans={y.word}
-                    word={shuffle[i].word}
+                    word={shuffle[i].cesky}
                     onChange={(value) => correct(i, value)}
                   />
                   {console.log(selected_value)}
@@ -136,13 +159,15 @@ const Spojovacka = () => {
               setSelected_value(
                 Array.from(Array(words.length)).map(() => undefined)
               );
-              setShuffle(data.sort(() => 0.5 - Math.random()).slice(4));
+              setShuffle(data.sort(() => 0.5 - Math.random()).slice(0, 4));
               setWords(
                 shuffle
-                  .map((x) => ({ id: x.id, word: x.word }))
+                  .map((x) => ({ id: x.ID_slovicka, word: x.cesky }))
                   .sort(() => 0.5 - Math.random())
               );
-              setTrans(shuffle.map((x) => ({ id: x.id, word: x.trans })));
+              setTrans(
+                shuffle.map((x) => ({ id: x.ID_slovicka, word: x.preklad }))
+              );
             }}
           />
         </div>
