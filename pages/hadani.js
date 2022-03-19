@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-
-const data = [
+import React, { useState, useEffect, useContext } from "react";
+import UserContext from "../components/userContext";
+/*const data = [
   {
     id: 1,
     word: "auto",
@@ -42,81 +42,105 @@ const data = [
     word: "hlava",
     trans: "head",
   },
-];
+];*/
+
 const Hadani = () => {
-  const words = data.map((x) => ({ id: x.id, word: x.word }));
-  const trans = data.map((x) => ({ id: x.id, word: x.trans }));
-  const [wordlist, setWordlist] = useState(words.concat(trans));
-  const slovicka = data.map((x) => x.trans);
+  const { user, setUser } = useContext(UserContext);
+
+  const slovickaTable = async () => {
+    let url = "/api/slovicka";
+    const params = {
+      method: "SelectByLanguage",
+      ID_jazyka: 1,
+    };
+    const response = await fetch(
+      url + "?" + new URLSearchParams(params).toString(),
+      { method: "GET" }
+    );
+    const json = await response.json();
+    setData(json.slovicka);
+    console.log(json.slovicka);
+    console.log("profil page");
+  };
+  const [words, setWords] = useState();
+  const [trans, setTrans] = useState();
+  const [data, setData] = useState([]);
   const [slovo, setSlovo] = useState("");
   const [pocet, setPocet] = useState(0);
   const [stav, setStav] = useState(false);
   const [nastavenypocet, setNastavenypocet] = useState(0);
   const [vysledekspravne, setVysledekspravne] = useState(0);
   const [vysledekspatne, setVysledekspatne] = useState(0);
-  const [randomslovo, setRandomslovo] = useState(
-    slovicka[Math.floor(Math.random() * slovicka.length)]
-  );
+  const [randomslovo, setRandomslovo] = useState(0);
 
-  const getrandomword = () => {
-    return slovicka[Math.floor(Math.random() * slovicka.length)];
-  };
   const kontrola = () => {
-    console.log(wordlist);
-    let pole = [];
-    let index_1 = "";
-    let index_2 = "";
-    for (let i = 0; i < wordlist.length; i++) {
-      if (slovo == wordlist[i].word) index_1 = i;
-      if (index_1 != "" && randomslovo == wordlist[i].word) {
-        index_2 = i;
-        if (wordlist[index_1].id == wordlist[index_2].id) pole.push(i);
-        index_1 = "";
-        index_2 = "";
-      }
-    }
-
-    if (pole.length > 0) {
+    //console.log(slovo + " == " + words[randomslovo].word);
+    if (slovo == words[randomslovo].word) {
       setVysledekspravne(vysledekspravne + 1);
-      setPocet(pocet - 1);
-      pole = [];
-      setRandomslovo(getrandomword);
-      if (pocet === 1) setStav(true);
     } else {
-      setRandomslovo(getrandomword);
       setVysledekspatne(vysledekspatne + 1);
-      setPocet(pocet - 1);
-      if (pocet === 1) setStav(true);
     }
+    setRandomslovo(randomslovo + 1);
+    setPocet(pocet - 1);
+    if (pocet === 1) setStav(true);
   };
+  useEffect(() => {
+    if (user) {
+      slovickaTable();
+    } else {
+      router.push("/");
+    }
+  }, []);
 
+  const generateWords = (nastavenypocet) => {
+    const selected = data
+      .sort(() => Math.random() - 0.5)
+      .slice(0, nastavenypocet + 1);
+
+    console.log(selected);
+    setWords(
+      selected.map((x) => ({
+        id: x.ID_slovicka,
+        word: x.cesky,
+      }))
+    );
+    setTrans(selected.map((x) => ({ id: x.ID_slovicka, word: x.preklad })));
+    setRandomslovo(0);
+  };
   return (
     <div>
       {stav === false && pocet === 0 && (
-        <form>
+        <div>
           <label>Nastavte počet pokusů </label>
           <input
             type="number"
             name="pocet"
             value={nastavenypocet}
             onChange={(e) => {
-              setNastavenypocet(e.target.value);
+              console.log(data.length);
+              if (e.target.value > data.length) {
+                setNastavenypocet(data.length);
+                console.log(nastavenypocet);
+              } else {
+                setNastavenypocet(e.target.value);
+              }
             }}
           />
-          <input
-            type="button"
-            value="click"
-            onClick={(e) => {
+          <button
+            onClick={() => {
               setVysledekspatne(0);
               setVysledekspravne(0);
               setPocet(nastavenypocet);
+              generateWords(nastavenypocet);
             }}
-          />
-        </form>
+          >
+            Click
+          </button>
+        </div>
       )}
-      {pocet != 0 && <p>{randomslovo}</p>}
+      {pocet != 0 && <p>{trans[randomslovo].word}</p>}
       {pocet != 0 && (
-        <form method="post">
+        <div>
           <input
             type="text"
             name="slovo"
@@ -124,16 +148,28 @@ const Hadani = () => {
             onChange={(e) => {
               setSlovo(e.target.value);
             }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                kontrola();
+                setSlovo("");
+              }
+            }}
           />
-          <input
-            type="button"
-            value="click"
+          <button
             onClick={() => {
               kontrola();
               setSlovo("");
             }}
-          />
-        </form>
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                kontrola();
+                setSlovo("");
+              }
+            }}
+          >
+            Click
+          </button>
+        </div>
       )}
       {stav === true && (
         <div>

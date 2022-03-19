@@ -24,7 +24,7 @@ async function handler(req, res) {
 
   const insert = async (obj) => {
     const db = knex(connectionString);
-    const i = await db(table_name).insert(obj);
+    const table = await db(table_name).insert(obj);
     return table;
   };
 

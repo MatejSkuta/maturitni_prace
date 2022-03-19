@@ -79,18 +79,9 @@ const Obesenec = () => {
     setB("");
   };
   const alphabet = alpha.map((x) => String.fromCharCode(x));
-  let words;
-  let trans;
-  let slovicka;
-  if (data) {
-    words = data.map((x) => ({
-      id: x.ID_slovicka,
-      word: x.cesky,
-    }));
-    trans = data.map((x) => ({ id: x.ID_slovicka, word: x.preklad }));
-    slovicka = data.map((x) => x.preklad);
-    console.log(slovicka);
-  }
+  const [slovicka, setSlovicka] = useState();
+  const [words, setWords] = useState();
+  const [trans, setTrans] = useState();
 
   useEffect(() => {
     if (user) {
@@ -99,6 +90,19 @@ const Obesenec = () => {
       router.push("/");
     }
   }, []);
+  useEffect(() => {
+    if (data) {
+      setWords(
+        data.map((x) => ({
+          id: x.ID_slovicka,
+          word: x.cesky,
+        }))
+      );
+      setTrans(data.map((x) => ({ id: x.ID_slovicka, word: x.preklad })));
+      setSlovicka(data.map((x) => x.preklad));
+      console.log(slovicka);
+    }
+  }, [data]);
   return (
     <div>
       <img
