@@ -14,28 +14,30 @@ function Navigation() {
   return (
     <nav className="navbar navbar-expand-md navbar-dark bg-dark">
       <div className="container-fluid">
-        <ul className="navbar-nav">
-          <li className="nav-item active">
-            <a href="/Obesenec" className="nav-link">
-              Oběšenec
-            </a>
-          </li>
-          <li className="nav-item active">
-            <a href="/hadani" className="nav-link">
-              Hadani
-            </a>
-          </li>
-          <li className="nav-item active">
-            <a href="/pexeso" className="nav-link">
-              Pexeso
-            </a>
-          </li>
-          <li className="nav-item active">
-            <a href="/spojovacka" className="nav-link">
-              Spojovačka
-            </a>
-          </li>
-        </ul>
+        {user && (
+          <ul className="navbar-nav">
+            <li className="nav-item active">
+              <a href="/Obesenec" className="nav-link">
+                Oběšenec
+              </a>
+            </li>
+            <li className="nav-item active">
+              <a href="/hadani" className="nav-link">
+                Hadani
+              </a>
+            </li>
+            <li className="nav-item active">
+              <a href="/pexeso" className="nav-link">
+                Pexeso
+              </a>
+            </li>
+            <li className="nav-item active">
+              <a href="/spojovacka" className="nav-link">
+                Spojovačka
+              </a>
+            </li>
+          </ul>
+        )}
       </div>
       <div className="mx-auto order-0">
         <a href="/" className="navbar-brand mx-auto">
