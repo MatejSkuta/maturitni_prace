@@ -1,44 +1,78 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+  useRef,
+} from "react";
 
 import UserContext from "./userContext";
 
 function Navigation() {
   const { user, setUser } = useContext(UserContext);
   const [isloading, setIsloading] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(user === "admin@email.cz");
+  const myref = useRef();
 
   useEffect(() => {
     setIsloading(false);
+    /* if (user === "admin@email.cz" && !isloading) {
+      setIsAdmin(true);
+      myref.current.click();
+    }
     console.log(user);
+   /// if (user === "admin@email.cz"){return () => {
+    //if (user != "admin@email.cz") setIsAdmin(false);*
+    setIsAdmin(true);
+  };}*/
   }, [user]);
 
+  /*useEffect(() => {
+    setIsloading(false);
+    if (user === "admin@email.cz" && !isloading) {
+      setIsAdmin(true);
+      myref.current.click();
+    }
+    console.log(user);
+    /*if (user === "admin@email.cz"){return () => {
+    //if (user != "admin@email.cz") setIsAdmin(false);
+    setIsAdmin(true);
+  };}
+  }, [user]);
+  useEffect(() => {
+    if (user === "admin@email.cz" && !isloading) myref.current.click();
+  }, [isAdmin]);
+*/
   return (
     <nav className="navbar navbar-expand-md navbar-dark bg-dark">
       <div className="container-fluid">
-        <ul className="navbar-nav">
-          <li className="nav-item active">
-            <a href="/Obesenec" className="nav-link">
-              Oběšenec
-            </a>
-          </li>
-          <li className="nav-item active">
-            <a href="/hadani" className="nav-link">
-              Hadani
-            </a>
-          </li>
-          <li className="nav-item active">
-            <a href="/pexeso" className="nav-link">
-              Pexeso
-            </a>
-          </li>
-          <li className="nav-item active">
-            <a href="/spojovacka" className="nav-link">
-              Spojovačka
-            </a>
-          </li>
-        </ul>
+        {user && (
+          <ul className="navbar-nav">
+            <li className="nav-item active">
+              <a href="/Obesenec" className="nav-link">
+                Oběšenec
+              </a>
+            </li>
+            <li className="nav-item active">
+              <a href="/hadani" className="nav-link">
+                Hadani
+              </a>
+            </li>
+            <li className="nav-item active">
+              <a href="/pexeso" className="nav-link">
+                Pexeso
+              </a>
+            </li>
+            <li className="nav-item active">
+              <a href="/spojovacka" className="nav-link">
+                Spojovačka
+              </a>
+            </li>
+          </ul>
+        )}
       </div>
       <div className="mx-auto order-0">
-        <a href="/" className="navbar-brand mx-auto">
+        <a href="/" ref={myref} className="navbar-brand mx-auto">
           WORDGAME
         </a>
         <button
@@ -53,14 +87,16 @@ function Navigation() {
       <div className="navbar-collapse collapse w-100 order-3 dual-collapse2">
         {!isloading && (
           <ul className="navbar-nav ml-auto">
-            {user && user === "admin@email.cz" && (
+            {isAdmin && (
               <li className="nav-item active">
                 <a href="/administraceUzivatelu" className="nav-link">
                   Administrace uživatelů
                 </a>
               </li>
             )}
-            {user && user === "admin@email.cz" && (
+            {console.log(user)}
+            {console.log(user === "admin@email.cz")}
+            {isAdmin && (
               <li className="nav-item active">
                 <a href="/administraceSlovicek" className="nav-link">
                   Administrace slovíček
