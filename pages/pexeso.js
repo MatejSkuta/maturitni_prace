@@ -1,49 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import Karticka from "../components/karticka";
 import UserContext from "../components/userContext";
-/*const data = [
-  {
-    id: 1,
-    word: "auto",
-    trans: "car",
-  },
-  {
-    id: 2,
-    word: "tričko",
-    trans: "T-shirt",
-  },
-  {
-    id: 3,
-    word: "slunce",
-    trans: "sun",
-  },
-  {
-    id: 4,
-    word: "kůže",
-    trans: "skin",
-  },
+import router from "next/router";
 
-  {
-    id: 5,
-    word: "kalhoty",
-    trans: "trousers",
-  },
-  {
-    id: 6,
-    word: "brýle",
-    trans: "glasses",
-  },
-  {
-    id: 7,
-    word: "hodinky",
-    trans: "watch",
-  },
-  {
-    id: 8,
-    word: "hlava",
-    trans: "head",
-  },
-];*/
 const Pexeso = () => {
   const { user, setUser } = useContext(UserContext);
   const slovickaTable = async () => {
@@ -109,6 +68,8 @@ const Pexeso = () => {
   useEffect(() => {
     if (user) {
       slovickaTable();
+    } else {
+      router.push("/");
     }
   }, []);
 
