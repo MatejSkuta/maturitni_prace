@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import UserContext from "../components/userContext";
 import router from "next/router";
 
@@ -9,7 +9,7 @@ const Hadani = () => {
     let url = "/api/slovicka";
     const params = {
       method: "SelectByLanguage",
-      ID_jazyka: 1,
+      ID_jazyka: volba,
     };
     const response = await fetch(
       url + "?" + new URLSearchParams(params).toString(),
@@ -45,6 +45,7 @@ const Hadani = () => {
           datum_zacatku: datum,
           datum_konce: new Date().toISOString(),
           ID_uzivatel: users.ID_uzivatel,
+          jazyk: volba,
         },
       }),
       headers: {
@@ -54,31 +55,41 @@ const Hadani = () => {
     const data = await response.json();
     console.log(data);
   };
-
+  const ref = useRef();
   const [words, setWords] = useState();
-  const [trans, setTrans] = useState();
+  const [trans, setTrans] = useState([]);
   const [data, setData] = useState([]);
   const [slovo, setSlovo] = useState("");
   const [pocet, setPocet] = useState(0);
   const [stav, setStav] = useState(false);
-  const [nastavenypocet, setNastavenypocet] = useState(0);
+  const [nastavenypocet, setNastavenypocet] = useState(5);
   const [vysledekspravne, setVysledekspravne] = useState(0);
   const [vysledekspatne, setVysledekspatne] = useState(0);
   const [randomslovo, setRandomslovo] = useState(0);
+  const [isTimeout, setIsTimeout] = useState(false);
   const [datum, setDatum] = useState();
+  const [volba, setVolba] = useState(1);
 
   const kontrola = () => {
+    if (isTimeout) return;
     //console.log(slovo + " == " + words[randomslovo].word);
     if (slovo == words[randomslovo].word) {
       setVysledekspravne(vysledekspravne + 1);
+      if (ref.current) ref.current.style.color = "lightgreen";
     } else {
       setVysledekspatne(vysledekspatne + 1);
+      if (ref.current) ref.current.style.color = "red";
     }
-    setRandomslovo(randomslovo + 1);
-    setPocet(pocet - 1);
-    if (pocet === 1) {
-      setStav(true);
-    }
+    setIsTimeout(true);
+    setTimeout(() => {
+      setRandomslovo(randomslovo + 1);
+      if (ref.current) ref.current.style.color = "black";
+      setPocet(pocet - 1);
+      setIsTimeout(false);
+      if (pocet === 1) {
+        setStav(true);
+      }
+    }, 2000);
   };
   useEffect(() => {
     if (user) {
@@ -88,6 +99,9 @@ const Hadani = () => {
       router.push("/");
     }
   }, []);
+  useEffect(() => {
+    slovickaTable();
+  }, [volba]);
 
   useEffect(() => {
     if (stav) statistika();
@@ -112,8 +126,23 @@ const Hadani = () => {
     <div>
       {stav === false && pocet === 0 && (
         <div>
+          <select
+            id="volba"
+            className="custom-select w-25"
+            value={volba}
+            onChange={(e) => {
+              if (e.target.value === "1") setVolba(1);
+              else if (e.target.value === "2") setVolba(2);
+            }}
+          >
+            <option value="1">Anglické</option>
+            <option value="2">Německé</option>
+          </select>
+          {console.log(volba)}
+          <br></br>
           <label>Nastavte počet pokusů min(5) </label>
           <input
+            className="form-control input"
             type="number"
             name="pocet"
             value={nastavenypocet}
@@ -129,7 +158,9 @@ const Hadani = () => {
               }
             }}
           />
+          <br></br>
           <button
+            className="btn btn-primary"
             onClick={() => {
               setVysledekspatne(0);
               setVysledekspravne(0);
@@ -142,10 +173,11 @@ const Hadani = () => {
           </button>
         </div>
       )}
-      {pocet != 0 && <p>{trans[randomslovo].word}</p>}
+      {trans[randomslovo] && <p ref={ref}>{trans[randomslovo].word}</p>}
       {pocet != 0 && (
         <div>
           <input
+            className="form-control input"
             type="text"
             name="slovo"
             value={slovo}
@@ -159,7 +191,9 @@ const Hadani = () => {
               }
             }}
           />
+          <br></br>
           <button
+            className="btn btn-primary"
             onClick={() => {
               kontrola();
               setSlovo("");
@@ -180,6 +214,7 @@ const Hadani = () => {
           <p>Počet správných: {vysledekspravne}</p>
           <p>Počet špatných: {vysledekspatne}</p>
           <input
+            className="btn btn-success"
             type="button"
             value="nová hra"
             onClick={() => {

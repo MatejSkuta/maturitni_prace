@@ -3,6 +3,7 @@ import UserContext from "../components/userContext";
 import bcrypt from "bcryptjs/dist/bcrypt";
 import router from "next/router";
 import Row from "../components/row";
+import UserStatistics from "../components/statistics";
 
 const Profil = () => {
   const { user, setUser } = useContext(UserContext);
@@ -67,7 +68,6 @@ const Profil = () => {
       {users && (
         <div>
           <h1>Profil:</h1>
-
           <div>
             <p>Email: {users.email}</p>
             <p>Uživatelské jméno: {users.nickname} </p>
@@ -78,22 +78,7 @@ const Profil = () => {
               {new Date(users.datum_registrace).toLocaleDateString()}
             </p>
           </div>
-          <div>
-            {stat && (
-              <table>
-                <tr>
-                  <th>Počet špatně</th>
-                  <th>Počet správně</th>
-                  <th>Celkový počet</th>
-                  <th>Úspěšnost </th>
-                  <th>Celkový čas</th>
-                  <th>Datum konce</th>
-                </tr>
-                {stat != null &&
-                  stat.map((u) => <Row statistikaData={u}></Row>)}
-              </table>
-            )}
-          </div>
+          {stat && <UserStatistics stat={stat} />}
         </div>
       )}
     </div>

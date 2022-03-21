@@ -29,14 +29,16 @@ const AdministraceSlovicek = () => {
   return (
     <div>
       {users && (
-        <div>
-          <table>
+        <div class="table-responsive">
+          <h1>Uživatelé:</h1>
+          <table class="table">
             <tr>
               <th>E-mail</th>
               <th>Uživatelské jméno</th>
               <th>Jméno</th>
               <th>Přijmení</th>
               <th>Datum registrace</th>
+              <th>Detail</th>
             </tr>
             {console.log(users)}
             {users.map((u) => (

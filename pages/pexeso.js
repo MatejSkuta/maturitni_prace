@@ -111,6 +111,7 @@ const Pexeso = () => {
         })}
         {arrayvisibles.every((x) => x === null) && (
           <button
+            className="btn btn-success"
             onClick={() => {
               Restart();
             }}

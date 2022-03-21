@@ -15,8 +15,8 @@ const hashPassword = async (password, hash) => {
 
 const Signup = ({ hash }) => {
   const { user, setUser } = useContext(UserContext);
-  const [email, setEmail] = useState("admin@email.cz");
-  const [heslo, setHeslo] = useState("admin");
+  const [email, setEmail] = useState();
+  const [heslo, setHeslo] = useState();
   const [jmeno, setJmeno] = useState();
   const [prijmeni, setPrijmeni] = useState();
   const [uzivatelskejmeno, setUzivatelskejmeno] = useState();

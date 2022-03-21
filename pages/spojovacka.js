@@ -84,6 +84,7 @@ const Spojovacka = () => {
           <input
             type="submit"
             value="Odeslat"
+            className="btn btn-primary"
             onClick={() => {
               let pocet_undefined = 0;
               for (let j = 0; j < selected_value.length; j++) {
@@ -111,6 +112,7 @@ const Spojovacka = () => {
           <p>počet správných: {dobre}</p>
           <p>počet špatných: {spatne}</p>
           <input
+            className="btn btn-success"
             type="submit"
             value="nová hra"
             onClick={() => {

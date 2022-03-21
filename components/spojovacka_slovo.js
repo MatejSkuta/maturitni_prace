@@ -6,6 +6,7 @@ const SpojovackaSlovo = ({ wordlist, trans, word, onChange }) => {
   return (
     <div>
       <select
+        className="custom-select w-25"
         name="porovnavacka"
         id={"porovnavacka"}
         onChange={(e) => {

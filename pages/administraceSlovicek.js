@@ -20,7 +20,7 @@ const AdministraceSlovicek = () => {
         user: {
           cesky: cesky,
           preklad: preklad,
-          ID_jazyka: 1,
+          ID_jazyka: volba,
         },
       }),
       headers: {
@@ -73,9 +73,10 @@ const AdministraceSlovicek = () => {
   return (
     <div>
       {slovicka && (
-        <div>
+        <div className="container">
           <select
             id="volba"
+            className="custom-select w-25"
             value={volba}
             onChange={(e) => {
               if (e.target.value === "1") setVolba(1);
@@ -88,6 +89,7 @@ const AdministraceSlovicek = () => {
           <br></br>
           <label for="fname">Česky:</label>
           <input
+            class="form-control input"
             type="text"
             id="fname"
             value={cesky}
@@ -95,8 +97,9 @@ const AdministraceSlovicek = () => {
               setCesky(e.target.value);
             }}
           />
-          <label for="lname">Anglicky:</label>
+          <label for="lname">Překlad:</label>
           <input
+            class="form-control input"
             type="text"
             id="lname"
             value={preklad}
@@ -104,9 +107,11 @@ const AdministraceSlovicek = () => {
               setPreklad(e.target.value);
             }}
           />
+          <br></br>
           <input
             type="submit"
             value="Přidat"
+            className="btn btn-primary"
             onClick={() => {
               if (cesky != "" || preklad != "") {
                 pridaniSlovicka();
@@ -115,23 +120,26 @@ const AdministraceSlovicek = () => {
               }
             }}
           />
+
           {console.log(volba)}
-          <table>
-            <tr>
-              <th>ID_slovicka</th>
-              <th>Česky</th>
-              <th>Překlad</th>
-              <th>Jazyk</th>
-            </tr>
-            {console.log(slovicka)}
-            {slovicka.map((u) => (
-              <Row
-                slovickaData={u}
-                setIsupdate={setIsupdate}
-                volba={volba}
-              ></Row>
-            ))}
-          </table>
+          <div class="table-responsive">
+            <table class="table">
+              <tr>
+                <th>ID_slovicka</th>
+                <th>Česky</th>
+                <th>Překlad</th>
+                <th>Jazyk</th>
+              </tr>
+              {console.log(slovicka)}
+              {slovicka.map((u) => (
+                <Row
+                  slovickaData={u}
+                  setIsupdate={setIsupdate}
+                  volba={volba}
+                ></Row>
+              ))}
+            </table>
+          </div>
         </div>
       )}
     </div>

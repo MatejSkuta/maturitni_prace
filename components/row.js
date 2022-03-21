@@ -1,5 +1,6 @@
 import React from "react";
 import DateTime from "tedious/lib/data-types/datetime";
+import Link from "next/link";
 
 const renderUser = (Data, deleteUser) => (
   <tr>
@@ -8,9 +9,16 @@ const renderUser = (Data, deleteUser) => (
     <td>{Data.jmeno}</td>
     <td>{Data.prijmeni}</td>
     <td>{new Date(Data.datum_registrace).toLocaleDateString()}</td>
+    <td>
+      <Link href={"/detail/" + Data.nickname + "/" + Data.ID_uzivatel}>
+        <button class="btn btn-success">Detail</button>
+      </Link>
+    </td>
     {Data.nickname != "admin" && (
       <td>
-        <button onClick={deleteUser}>Odstranit</button>
+        <button class="btn btn-danger" onClick={deleteUser}>
+          Odstranit
+        </button>
       </td>
     )}
   </tr>
@@ -22,12 +30,15 @@ const renderSlovicka = (Data, deleteSlovicka) => (
     <td>{Data.preklad}</td>
     {Data.ID_jazyka === 1 ? <td>Anglicky</td> : <td>Německy</td>}
     <td>
-      <button onClick={deleteSlovicka}>Odstranit</button>
+      <button class="btn btn-sm btn-danger" onClick={deleteSlovicka}>
+        Odstranit
+      </button>
     </td>
   </tr>
 );
-const renderStatistika = (Data) => (
+const renderStatistika = (Data, volba) => (
   <tr>
+    {Data.jazyk === 1 ? <td>Angličtina</td> : <td>Němčina</td>}
     <td>{Data.celkovy_pocet - Data.pocet_uspechu}</td>
     <td>{Data.pocet_uspechu}</td>
     <td>{Data.celkovy_pocet}</td>
