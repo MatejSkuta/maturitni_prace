@@ -76,7 +76,7 @@ const Obesenec = () => {
           alphabet.map((x) => {
             return (
               <button
-                className="pismena"
+                className="btn btn-lg btn-info m-1"
                 value={x}
                 onClick={(x) => {
                   let pole = [];
@@ -104,7 +104,7 @@ const Obesenec = () => {
 
       {konecne_slovo.length == 0 && (
         <input
-          className="pismena"
+          className="btn btn-primary"
           type="button"
           value="začít hru"
           onClick={() => {
@@ -132,7 +132,7 @@ const Obesenec = () => {
         pocet < 10 && (
           <div>
             <button
-              className="pismena"
+              className="btn btn-outline-dark"
               value="Hint"
               onClick={() => {
                 let a, c;
@@ -160,7 +160,7 @@ const Obesenec = () => {
         <div>
           <p>Vyhrál jste!</p>
           <input
-            className="pismena"
+            className="btn btn-success"
             type="button"
             value="Nová hra"
             onClick={() => reset()}
@@ -171,7 +171,7 @@ const Obesenec = () => {
         <div>
           <p>Prohrál jste!</p>
           <input
-            className="pismena"
+            className="btn btn-success"
             type="button"
             value="Nová hra"
             onClick={() => reset()}

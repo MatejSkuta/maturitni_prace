@@ -22,11 +22,6 @@ function Navigation() {
               </a>
             </li>
             <li className="nav-item active">
-              <a href="/hadani" className="nav-link">
-                Hadani
-              </a>
-            </li>
-            <li className="nav-item active">
               <a href="/pexeso" className="nav-link">
                 Pexeso
               </a>
@@ -34,6 +29,11 @@ function Navigation() {
             <li className="nav-item active">
               <a href="/spojovacka" className="nav-link">
                 Spojovačka
+              </a>
+            </li>
+            <li className="nav-item active">
+              <a href="/hadani" className="nav-link">
+                Test
               </a>
             </li>
           </ul>

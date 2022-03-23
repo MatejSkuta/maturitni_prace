@@ -9,7 +9,7 @@ const Pexeso = () => {
     let url = "/api/slovicka";
     const params = {
       method: "SelectByLanguage",
-      ID_jazyka: 1,
+      ID_jazyka: volba,
     };
     const response = await fetch(
       url + "?" + new URLSearchParams(params).toString(),
@@ -23,6 +23,8 @@ const Pexeso = () => {
   const [data, setData] = useState([]);
   const [trans, setTrans] = useState();
   const [words, setWords] = useState();
+  const [inGame, setInGame] = useState(false);
+  const [volba, setVolba] = useState(1);
   const [wordlist, setWordlist] = useState([]);
   const [arrayvisibles, setArrayvisibles] = useState(
     Array.from(Array(16)).map(() => false)
@@ -87,39 +89,70 @@ const Pexeso = () => {
       setWordlist(words.concat(trans).sort(() => 0.5 - Math.random()));
     }
   }, [words]);
-
+  useEffect(() => {
+    slovickaTable();
+  }, [volba]);
   return (
     <div>
-      <div id="content">
-        {Array.from(Array(4)).map((y, i) => {
-          return (
-            <div>
-              {wordlist.slice(i * 4, i * 4 + 4).map((x, j) => (
-                <Karticka
-                  visible={
-                    arrayvisibles[i * 4 + j] == null
-                      ? true
-                      : arrayvisibles[i * 4 + j]
-                  }
-                  Myclass={arrayvisibles[i * 4 + j] == null ? " uhodnuta" : ""}
-                  onClick={(e) => handleClick(i * 4 + j)}
-                  word={x.word}
-                />
-              ))}
-            </div>
-          );
-        })}
-        {arrayvisibles.every((x) => x === null) && (
-          <button
-            className="btn btn-success"
-            onClick={() => {
-              Restart();
+      {!inGame && (
+        <div>
+          <select
+            id="volba"
+            className="custom-select w-25"
+            value={volba}
+            onChange={(e) => {
+              if (e.target.value === "1") setVolba(1);
+              else if (e.target.value === "2") setVolba(2);
             }}
           >
-            Restart
+            <option value="1">Anglické</option>
+            <option value="2">Německé</option>
+          </select>
+          <button
+            className="btn btn-primary"
+            onClick={() => {
+              setInGame(true);
+            }}
+          >
+            Start
           </button>
-        )}
-      </div>
+        </div>
+      )}
+      {inGame && (
+        <div id="content">
+          {Array.from(Array(4)).map((y, i) => {
+            return (
+              <div>
+                {wordlist.slice(i * 4, i * 4 + 4).map((x, j) => (
+                  <Karticka
+                    visible={
+                      arrayvisibles[i * 4 + j] == null
+                        ? true
+                        : arrayvisibles[i * 4 + j]
+                    }
+                    Myclass={
+                      arrayvisibles[i * 4 + j] == null ? " uhodnuta" : ""
+                    }
+                    onClick={(e) => handleClick(i * 4 + j)}
+                    word={x.word}
+                  />
+                ))}
+              </div>
+            );
+          })}
+          {arrayvisibles.every((x) => x === null) && (
+            <button
+              className="btn btn-success"
+              onClick={() => {
+                Restart();
+                setInGame(false);
+              }}
+            >
+              Restart
+            </button>
+          )}
+        </div>
+      )}
     </div>
   );
 };

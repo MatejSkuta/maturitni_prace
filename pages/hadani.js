@@ -169,7 +169,7 @@ const Hadani = () => {
               setDatum(new Date().toISOString());
             }}
           >
-            Click
+            Start
           </button>
         </div>
       )}
