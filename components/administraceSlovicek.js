@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
-import UserContext from "../components/userContext";
-import Row from "../components/row";
+import UserContext from "./userContext";
+import Row from "./row";
 import router from "next/router";
 
 const AdministraceSlovicek = () => {
@@ -55,7 +55,7 @@ const AdministraceSlovicek = () => {
       slovickaTable();
       setIsupdate(false);
     } else {
-      router.push("/");
+      // router.push("/");
     }
   }, [isupdate]);
   useEffect(() => {

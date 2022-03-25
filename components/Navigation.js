@@ -43,6 +43,7 @@ function Navigation() {
         <a href="/" className="navbar-brand mx-auto">
           WORDGAME
         </a>
+
         <button
           className="navbar-toggler"
           type="button"
@@ -55,20 +56,6 @@ function Navigation() {
       <div className="navbar-collapse collapse w-100 order-3 dual-collapse2">
         {!isloading && (
           <ul className="navbar-nav ml-auto">
-            {user && user === "admin@email.cz" && (
-              <li className="nav-item active">
-                <a href="/administraceUzivatelu" className="nav-link">
-                  Administrace uživatelů
-                </a>
-              </li>
-            )}
-            {user && user === "admin@email.cz" && (
-              <li className="nav-item active">
-                <a href="/administraceSlovicek" className="nav-link">
-                  Administrace slovíček
-                </a>
-              </li>
-            )}
             {!user ? (
               <li className="nav-item active">
                 <a href="/login" className="nav-link">

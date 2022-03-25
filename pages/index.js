@@ -1,7 +1,3 @@
 export default function Home() {
-  return (
-    <div>
-      <p>necio</p>
-    </div>
-  );
+  return <div>neco</div>;
 }
