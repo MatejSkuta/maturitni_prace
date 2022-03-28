@@ -109,13 +109,28 @@ const Pexeso = () => {
             <option value="2">Německé</option>
           </select>
           <button
-            className="btn btn-primary"
+            className="btn btn-success"
             onClick={() => {
               setInGame(true);
             }}
           >
-            Start
+            Začít hru
           </button>
+          <div>
+            <hr></hr>
+            <h2>Pexeso</h2>
+            Tuto hru je možné si zahrát jak v angličtině tak i v němčině.
+            Princip této hry je velmi prostý. Najít dvojice slovíček(české a
+            překlad).Ve hře máme 16 kartiček, což znamená 8 dvojic. Jeden tah
+            této hry znamená otočit 2 kartičky.Při otočených kartičkách se na
+            obrazovce změní tyto dvě kartičky z červené na zelenou. Pokud
+            dvojici trefíme, tak obě kartičky zešednou a už s nimi nemůžeme
+            nijak pracovat. Pokud slovíčka netrefí, tak tak se po určitém
+            časovém intervalu kartičky otočí zpět. Tato hra bude taktéž jako
+            oběšenec především pro naučení a procvičování slovíček, které jsou
+            ve slovníku.
+            <img src={"./obrazky/obrazek_pexeso.PNG"} />
+          </div>
         </div>
       )}
       {inGame && (

@@ -62,12 +62,14 @@ const Obesenec = () => {
   }, [data]);
   return (
     <div>
-      <img
-        src={"./obrazky/stad_" + pocet + ".png"}
-        alt=""
-        width="200"
-        height="200"
-      />
+      {konecne_slovo.length != 0 && (
+        <img
+          src={"./obrazky/stad_" + pocet + ".png"}
+          alt=""
+          width="200"
+          height="200"
+        />
+      )}
 
       <div>
         {konecne_slovo != "" &&
@@ -103,25 +105,38 @@ const Obesenec = () => {
       </div>
 
       {konecne_slovo.length == 0 && (
-        <input
-          className="btn btn-primary"
-          type="button"
-          value="začít hru"
-          onClick={() => {
-            let slovo =
-              slovicka[
-                Math.floor(Math.random() * slovicka.length)
-              ].toUpperCase();
-            setKonecneslovo(slovo);
-            setMisto(
-              Array.from(Array(slovo.length)).map((x, i) => {
-                if (i == 0) return slovo[0];
-                else return "_";
-              })
-            );
-            //setVysledek("");
-          }}
-        />
+        <div>
+          <input
+            className="btn btn-lg btn-success"
+            type="button"
+            value="Začít hru"
+            onClick={() => {
+              let slovo =
+                slovicka[
+                  Math.floor(Math.random() * slovicka.length)
+                ].toUpperCase();
+              setKonecneslovo(slovo);
+              setMisto(
+                Array.from(Array(slovo.length)).map((x, i) => {
+                  if (i == 0) return slovo[0];
+                  else return "_";
+                })
+              );
+              //setVysledek("");
+            }}
+          />
+          <hr></hr>
+          <h2>Oběšenec</h2>V této hře si zahrajete známou hru oběšenec nebo-li
+          šibenice.Hra je pouze v angličtině. Zde je úkolem uhodnout slovo dřív
+          než se na obrazovku vykreslí oběšený panáček.Na obrazovce se vykreslí
+          slovíčko, které musí uživatel uhodnout.Akorát že místo písmen jsou
+          prázdné místa,teda kromě prvního písmena , které slouží jako malá
+          nápověda V případě že by si někdo nevěděl se slovíčkem rady, tak si
+          může zobrazit nápovědu, která mu zobrazí český překlad slovíčka, které
+          hádá. Tato hra je především určena k učení nových slovíček která jsou
+          ve slovníku
+          <img src={"./obrazky/obrazek_obesenec.PNG"} width="700" />
+        </div>
       )}
       <div>
         {konecne_slovo.length != 0 &&

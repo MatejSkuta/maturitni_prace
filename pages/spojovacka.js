@@ -84,13 +84,27 @@ const Spojovacka = () => {
             <option value="2">Německé</option>
           </select>
           <button
-            className="btn btn-primary"
+            className="btn btn-success"
             onClick={() => {
               setInGame(true);
             }}
           >
-            Start
+            Začít hru
           </button>
+          <hr></hr>
+          <div>
+            <h2>Spojování odpovídajících se slov</h2>
+            Zde jak už je z názvu vypovídající, tak úkolem bude spojit sobě
+            odpovídající slovíčka. Tato hra bude také možno hrát buď v
+            angličtině nebo v němčině. Budou zobrazeny čtyři cizí slovíčka a pod
+            každým z nich bude na výběr z těch samých slovíček akorát
+            přeložených do češtiny. Po vyplnění každé dvojice slovíčka odešleme
+            ke kontrole. V případě, že slovíčko spojíme se svým českým překladem
+            správně, tak se zbarví zeleně. V případě, že slovíčko nespojíme se
+            svým českým překladem správně, tak se zbarví červeně. Tato hra bude
+            už na vyšší úrovni, kde to bude taková příprava na test.
+            <img src={"./obrazky/obrazek_spojovacka.PNG"} />
+          </div>
         </div>
       )}
       {inGame && (

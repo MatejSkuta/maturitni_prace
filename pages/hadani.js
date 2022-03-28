@@ -160,7 +160,7 @@ const Hadani = () => {
           />
           <br></br>
           <button
-            className="btn btn-primary"
+            className="btn btn-success"
             onClick={() => {
               setVysledekspatne(0);
               setVysledekspravne(0);
@@ -169,8 +169,24 @@ const Hadani = () => {
               setDatum(new Date().toISOString());
             }}
           >
-            Start
+            Začít hru
           </button>
+          <hr></hr>
+          <div>
+            <h2>Test</h2>
+            Tato hra bude zkoušet naše znalosti z předešlých her. Opět bude
+            možnost si jí vyzkoušet jak v angličtině tak i v němčině. Uživatel
+            si před začátkem hry zvolí jazyk a počet slov ze kterých se chce
+            testovat. Minimální počet je 5 slovíček a maximální počet je počet
+            všech slovíček z databáze. V této hře se budou generovat cizí
+            slovíčka a uživatel bude psát jejich překlad bez jakékoliv nápovědy.
+            Pokud slovíčko uhodne , tak se barva slovíčka změní na zelenou.
+            Pokud neuhodne ,tak se barva změní na červenou. Slovíčko je obarvené
+            po určitou dobu a pak se vygeneruje nové se základní černou barvou.
+            Z tohoto testu už uživatel ve svém profilu nalezne statistiky. Tyto
+            statistiky bude mít možnost vidět i administrátor.<br></br>
+            <img src={"./obrazky/obrazek_test.PNG"} />
+          </div>
         </div>
       )}
       {trans[randomslovo] && <p ref={ref}>{trans[randomslovo].word}</p>}
