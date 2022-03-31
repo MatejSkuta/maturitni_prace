@@ -9,6 +9,7 @@ const UserDetail = ({ stat, nickname }) => {
       <h3>{nickname}</h3>
       {stat && <UserStatistics stat={stat} />}
       <button
+        className="btn btn-success ml-1"
         onClick={() => {
           router.back();
         }}
