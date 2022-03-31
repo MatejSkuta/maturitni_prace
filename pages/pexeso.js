@@ -156,7 +156,7 @@ const Pexeso = () => {
                 setInGame(false);
               }}
             >
-              Restart
+              Nová hra
             </button>
           )}
         </div>
