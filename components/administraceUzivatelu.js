@@ -39,6 +39,7 @@ const AdministraceSlovicek = () => {
               <th>Přijmení</th>
               <th>Datum registrace</th>
               <th>Detail</th>
+              <th></th>
             </tr>
             {console.log(users)}
             {users.map((u) => (
