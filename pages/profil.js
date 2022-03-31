@@ -42,7 +42,7 @@ const Zkouska = () => {
     if (user) {
       userTable();
     } else {
-      // router.push("/");
+      router.push("/");
     }
   }, []);
 
@@ -60,24 +60,24 @@ const Zkouska = () => {
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
               <button
                 class="nav-link active"
-                id="nav-home-tab"
+                id="profily"
                 data-bs-toggle="tab"
-                data-bs-target="#nav-home"
+                data-bs-target="#profil"
                 type="button"
                 role="tab"
-                aria-controls="nav-home"
+                aria-controls="profil"
                 aria-selected="true"
               >
                 Profil
               </button>
               <button
                 class="nav-link"
-                id="nav-profile-tab"
+                id="statistiky"
                 data-bs-toggle="tab"
-                data-bs-target="#nav-profile"
+                data-bs-target="#statistika"
                 type="button"
                 role="tab"
-                aria-controls="nav-profile"
+                aria-controls="statistika"
                 aria-selected="false"
               >
                 Statistika
@@ -85,12 +85,12 @@ const Zkouska = () => {
               {user === "admin@email.cz" && (
                 <button
                   class="nav-link"
-                  id="nav-contact-tab"
+                  id="slovicka"
                   data-bs-toggle="tab"
-                  data-bs-target="#nav-contact"
+                  data-bs-target="#slovicko"
                   type="button"
                   role="tab"
-                  aria-controls="nav-contact"
+                  aria-controls="slovicko"
                   aria-selected="false"
                 >
                   Administrace Slovíček
@@ -112,12 +112,12 @@ const Zkouska = () => {
               )}
             </div>
           </nav>
-          <div class="tab-content" id="nav-tabContent">
+          <div class="tab-content ohraniceni" id="nav-tabContent">
             <div
               class="tab-pane fade show active"
-              id="nav-home"
+              id="profil"
               role="tabpanel"
-              aria-labelledby="nav-home-tab"
+              aria-labelledby="profily"
             >
               {users && (
                 <div className="container">
@@ -169,17 +169,17 @@ const Zkouska = () => {
             </div>
             <div
               class="tab-pane fade"
-              id="nav-profile"
+              id="statistika"
               role="tabpanel"
-              aria-labelledby="nav-profile-tab"
+              aria-labelledby="statistiky"
             >
               {stat && <UserStatistics stat={stat} />}
             </div>
             <div
               class="tab-pane fade"
-              id="nav-contact"
+              id="slovicko"
               role="tabpanel"
-              aria-labelledby="nav-contact-tab"
+              aria-labelledby="slovicka"
             >
               <AdministraceSlovicek />
             </div>

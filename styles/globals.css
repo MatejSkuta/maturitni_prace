@@ -91,3 +91,16 @@ a {
   width: 400px;
   margin: auto;
 }
+.uvod {
+  font-size: 40px;
+}
+.ohraniceni {
+  border: 1px solid lightgrey;
+  border-top: none;
+}
+.odsazeni_tlacitka {
+  margin-bottom: 20px;
+}
+.odsazeni_prvni {
+  margin-top: 20px;
+}
