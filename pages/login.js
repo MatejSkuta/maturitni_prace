@@ -3,7 +3,6 @@ import bcrypt from "bcryptjs/dist/bcrypt";
 import router, { useRouter } from "next/router";
 
 const hashPassword = async (password, hash) => {
-  console.log(hash);
   return new Promise((resolve, reject) => {
     bcrypt.hash(password, hash, function (err, hashed) {
       if (err) reject(err);
@@ -37,7 +36,6 @@ const Login = ({ hash }) => {
       { method: "GET" }
     );
     const json = await response.json();
-    console.log(json);
 
     let check = true;
     if (
@@ -68,9 +66,7 @@ const Login = ({ hash }) => {
   };
 
   const handleRegistration = async (e) => {
-    console.log("Email check...");
     if (await check()) {
-      console.log("Handle insert...");
       const hashed = await hashPassword(heslo, hash);
       const response = await fetch("/api/uzivatel", {
         method: "POST",
@@ -90,7 +86,7 @@ const Login = ({ hash }) => {
         },
       });
       const data = await response.json();
-      console.log(data);
+
       router.push("/signup");
     }
   };
@@ -179,13 +175,16 @@ const Login = ({ hash }) => {
       {kontolaformulare && (
         <span className="error">Není vyplnění celý formulář !!!</span>
       )}
+      <p className="mt-4">
+        Máte již účet? Přihlaste se zde <a href="signup">přihlásit se</a>
+      </p>
     </div>
   );
 };
 
 export async function getStaticProps() {
   const hash = process.env.HASH;
-  console.log(hash);
+
   return {
     props: { hash },
   };

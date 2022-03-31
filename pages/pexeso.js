@@ -17,8 +17,6 @@ const Pexeso = () => {
     );
     const json = await response.json();
     setData(json.slovicka.sort(() => Math.random() - 0.5).slice(0, 8));
-    console.log(json.slovicka);
-    console.log("profil page");
   };
   const [data, setData] = useState([]);
   const [trans, setTrans] = useState();
@@ -78,14 +76,9 @@ const Pexeso = () => {
   useEffect(() => {
     setWords(data.map((x) => ({ id: x.ID_slovicka, word: x.cesky })));
     setTrans(data.map((x) => ({ id: x.ID_slovicka, word: x.preklad })));
-    /*setSlovicka(data.map((x) => x.preklad));
-      console.log(slovicka);*/
   }, [data]);
   useEffect(() => {
     if (words) {
-      console.log(data);
-      console.log(words);
-      console.log(trans);
       setWordlist(words.concat(trans).sort(() => 0.5 - Math.random()));
     }
   }, [words]);
@@ -95,7 +88,7 @@ const Pexeso = () => {
   return (
     <div>
       {!inGame && (
-        <div>
+        <div className="m-3">
           <select
             id="volba"
             className="custom-select w-25"
@@ -109,7 +102,7 @@ const Pexeso = () => {
             <option value="2">Německé</option>
           </select>
           <button
-            className="btn btn-success"
+            className="btn btn-success ml-1"
             onClick={() => {
               setInGame(true);
             }}

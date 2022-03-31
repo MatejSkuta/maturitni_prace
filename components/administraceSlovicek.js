@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import UserContext from "./userContext";
 import Row from "./row";
-import router from "next/router";
 
 const AdministraceSlovicek = () => {
   const { user, setUser } = useContext(UserContext);
@@ -28,7 +27,7 @@ const AdministraceSlovicek = () => {
       },
     });
     const data = await response.json();
-    console.log(data);
+
     setIssent(true);
   };
 
@@ -44,18 +43,12 @@ const AdministraceSlovicek = () => {
     );
     const json = await response.json();
     setSlovicka(json.slovicka);
-    console.log(json.slovicka);
-    console.log("profil page");
   };
-  /*useEffect(() => {
-    userTable();
-  }, []);*/
+
   useEffect(() => {
     if (user == "admin@email.cz") {
       slovickaTable();
       setIsupdate(false);
-    } else {
-      // router.push("/");
     }
   }, [isupdate]);
   useEffect(() => {
@@ -65,10 +58,6 @@ const AdministraceSlovicek = () => {
     slovickaTable();
     setIssent(false);
   }, [issent]);
-  useEffect(() => {
-    slovickaTable();
-    setIssent(false);
-  }, [isdelete]);
 
   return (
     <div>
@@ -121,16 +110,15 @@ const AdministraceSlovicek = () => {
             }}
           />
 
-          {console.log(volba)}
           <div class="table-responsive">
             <table class="table">
               <tr>
-                <th>ID_slovicka</th>
-                <th>Česky</th>
-                <th>Překlad</th>
-                <th>Jazyk</th>
+                <th className="border-top-0">Česky</th>
+                <th className="border-top-0">Překlad</th>
+                <th className="border-top-0">Jazyk</th>
+                <th className="border-top-0"></th>
               </tr>
-              {console.log(slovicka)}
+
               {slovicka.map((u) => (
                 <Row
                   slovickaData={u}

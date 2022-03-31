@@ -8,8 +8,6 @@ const SpojovackaSlovo = ({
   onChange,
   isCorrect,
 }) => {
-  console.log(trans);
-  console.log(word);
   let color = null;
   if (isCorrect && stav) color = { color: "lightgreen" };
   else if (isCorrect === false && stav) color = { color: "red" };
@@ -21,14 +19,9 @@ const SpojovackaSlovo = ({
         id={"porovnavacka"}
         style={color}
         onChange={(e) => {
-          console.log(word + " == " + e.target.value);
-          // console.log(e.target.value);
           if (e.target.value === word) {
-            console.log("správně");
             onChange(true);
           } else {
-            console.log("spatně");
-
             onChange(false);
           }
         }}

@@ -17,8 +17,6 @@ const Hadani = () => {
     );
     const json = await response.json();
     setData(json.slovicka);
-    console.log(json.slovicka);
-    console.log("profil page");
   };
   const userTable = async () => {
     let url = "/api/uzivatel";
@@ -32,8 +30,6 @@ const Hadani = () => {
     );
     const json = await response.json();
     setUsers(json.user);
-    console.log(typeof json);
-    console.log("profil page");
   };
   const statistika = async (e) => {
     const response = await fetch("/api/statistika", {
@@ -53,7 +49,6 @@ const Hadani = () => {
       },
     });
     const data = await response.json();
-    console.log(data);
   };
   const ref = useRef();
   const [words, setWords] = useState();
@@ -72,7 +67,7 @@ const Hadani = () => {
 
   const kontrola = () => {
     if (isTimeout) return;
-    //console.log(slovo + " == " + words[randomslovo].word);
+
     if (slovo == words[randomslovo].word) {
       setVysledekspravne(vysledekspravne + 1);
       if (ref.current) ref.current.style.color = "lightgreen";
@@ -111,7 +106,6 @@ const Hadani = () => {
       .sort(() => Math.random() - 0.5)
       .slice(0, nastavenypocet);
 
-    console.log(selected);
     setWords(
       selected.map((x) => ({
         id: x.ID_slovicka,
@@ -125,7 +119,7 @@ const Hadani = () => {
   return (
     <div>
       {stav === false && pocet === 0 && (
-        <div>
+        <div className="m-3">
           <select
             id="volba"
             className="custom-select w-25"
@@ -138,7 +132,7 @@ const Hadani = () => {
             <option value="1">Anglické</option>
             <option value="2">Německé</option>
           </select>
-          {console.log(volba)}
+
           <br></br>
           <label>Nastavte počet pokusů min(5) </label>
           <input
@@ -147,10 +141,8 @@ const Hadani = () => {
             name="pocet"
             value={nastavenypocet}
             onChange={(e) => {
-              console.log(data.length);
               if (e.target.value > data.length) {
                 setNastavenypocet(data.length);
-                console.log(nastavenypocet);
               } else if (e.target.value < 5) {
                 setNastavenypocet(5);
               } else {
@@ -160,7 +152,7 @@ const Hadani = () => {
           />
           <br></br>
           <button
-            className="btn btn-success"
+            className="btn btn-success "
             onClick={() => {
               setVysledekspatne(0);
               setVysledekspravne(0);

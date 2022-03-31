@@ -17,8 +17,6 @@ const Obesenec = () => {
     );
     const json = await response.json();
     setData(json.slovicka);
-    console.log(json.slovicka);
-    console.log("profil page");
   };
 
   const [pocet, setPocet] = useState(0);
@@ -57,7 +55,6 @@ const Obesenec = () => {
       );
       setTrans(data.map((x) => ({ id: x.ID_slovicka, word: x.preklad })));
       setSlovicka(data.map((x) => x.preklad));
-      console.log(slovicka);
     }
   }, [data]);
   return (
@@ -107,7 +104,7 @@ const Obesenec = () => {
       {konecne_slovo.length == 0 && (
         <div>
           <input
-            className="btn btn-lg btn-success"
+            className="btn btn-lg btn-success m-3"
             type="button"
             value="Začít hru"
             onClick={() => {
@@ -167,7 +164,7 @@ const Obesenec = () => {
             >
               Hint
             </button>
-            {console.log(b)}
+
             <p>{b}</p>
           </div>
         )}

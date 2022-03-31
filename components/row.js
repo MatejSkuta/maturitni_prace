@@ -64,7 +64,7 @@ const Row = ({ userData, setIsupdate, slovickaData, statistikaData }) => {
       }),
     });
     const json = await response.json();
-    console.log(json);
+
     setIsupdate(true);
   };
   const deleteSlovicka = async () => {
@@ -76,7 +76,7 @@ const Row = ({ userData, setIsupdate, slovickaData, statistikaData }) => {
       }),
     });
     const json = await response.json();
-    console.log(json);
+
     setIsupdate(true);
   };
   let render = null;

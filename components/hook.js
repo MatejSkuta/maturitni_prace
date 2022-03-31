@@ -6,7 +6,7 @@ export const useLocalStorage = (key, initialValue) => {
   const [storedValue, setStoredValue] = useState(() => {
     if (typeof window === "undefined") {
       const x = JSON.parse(initialValue);
-      console.log("0:" + typeof x);
+
       return x;
     }
     try {
@@ -15,16 +15,15 @@ export const useLocalStorage = (key, initialValue) => {
       // Parse stored json or if none return initialValue
 
       const x = JSON.parse(item);
-      console.log("1:" + typeof x);
+
       const y = JSON.parse(initialValue);
-      console.log("2:" + typeof y);
+
       return item ? x : y;
     } catch (error) {
       // If error also return initialValue
-      console.log(error);
 
       const z = JSON.parse(initialValue);
-      console.log("3:" + typeof z);
+
       return z;
     }
   });

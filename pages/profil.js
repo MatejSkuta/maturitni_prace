@@ -20,8 +20,6 @@ const Zkouska = () => {
     );
     const json = await response.json();
     setUsers(json.user);
-    console.log(typeof json);
-    console.log("profil page");
   };
   const statistikaUzivatele = async () => {
     let url = "/api/statistika";
@@ -35,8 +33,6 @@ const Zkouska = () => {
     );
     const json = await response.json();
     setStat(json.statistika);
-    console.log(json.statistika);
-    console.log("profil page");
   };
   useEffect(() => {
     if (user) {
@@ -47,8 +43,6 @@ const Zkouska = () => {
   }, []);
 
   useEffect(() => {
-    console.log("userchage");
-    console.log(users);
     if (users) statistikaUzivatele();
   }, [users]);
 
@@ -57,7 +51,7 @@ const Zkouska = () => {
       {users && (
         <div>
           <nav>
-            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <div class="nav nav-tabs mt-3" id="nav-tab" role="tablist">
               <button
                 class="nav-link active"
                 id="nav-home-tab"
@@ -93,7 +87,7 @@ const Zkouska = () => {
                   aria-controls="nav-contact"
                   aria-selected="false"
                 >
-                  Administrace Slovíček
+                  Slovíčka
                 </button>
               )}
               {user === "admin@email.cz" && (
@@ -107,7 +101,7 @@ const Zkouska = () => {
                   aria-controls="uzivatel"
                   aria-selected="false"
                 >
-                  Administrace Uživatelů
+                  Uživatelé
                 </button>
               )}
             </div>
@@ -120,8 +114,7 @@ const Zkouska = () => {
               aria-labelledby="nav-home-tab"
             >
               {users && (
-                <div className="container">
-                  <h1>Profil:</h1>
+                <div className="container p-4">
                   <div className="userProfile">
                     <div className="row">
                       <div className="col col-lg-6 profil text-right">

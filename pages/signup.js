@@ -22,7 +22,6 @@ const Signup = ({ hash }) => {
   const [uzivatelskejmeno, setUzivatelskejmeno] = useState();
   const [loginfailed, setLoginfailed] = useState(false);
   const check = async () => {
-    console.log("volám check");
     let url = "/api/uzivatel";
     const hashed = await hashPassword(heslo, hash);
     const response = await fetch("/api/uzivatel", {
@@ -40,17 +39,13 @@ const Signup = ({ hash }) => {
     });
     response.json().then((data) => {
       const u = data.user;
-      // console.log(u);
-      //delete u.heslo;
-      // console.log(u);
+
       if (Object.keys(u).length === 0) {
         setLoginfailed(true);
         setJmeno();
         setPrijmeni();
         setUzivatelskejmeno();
-        console.log(true);
       } else {
-        console.log("jsem uložený");
         setUser(u.email);
         setJmeno(u.jmeno);
         setPrijmeni(u.prijmeni);
@@ -89,14 +84,19 @@ const Signup = ({ hash }) => {
       <button className="btn btn-primary" onClick={check}>
         Přihlásit se
       </button>
+
       {loginfailed && <p>špatně zadané údaje nebo účet neexistuje</p>}
+      <p className="mt-4">
+        Nemáte ještě účet? Zaregistrujte se zde{" "}
+        <a href="login">zaregistrovat se</a>
+      </p>
     </div>
   );
 };
 
 export async function getStaticProps() {
   const hash = process.env.HASH;
-  console.log(hash);
+
   return {
     props: { hash },
   };

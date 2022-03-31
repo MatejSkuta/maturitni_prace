@@ -8,11 +8,10 @@ const Spojovacka = () => {
   const [data, setData] = useState([]);
   const ref = useRef();
   const [shuffle, setShuffle] = useState();
-  //console.log(shuffle.length);
+
   const [words, setWords] = useState();
   const [trans, setTrans] = useState();
-  console.log(shuffle);
-  //console.log(trans);
+
   const [selected_value, setSelected_value] = useState();
   const [dobre, setDobre] = useState(0);
   const [spatne, setSpatne] = useState(0);
@@ -31,8 +30,6 @@ const Spojovacka = () => {
     );
     const json = await response.json();
     setData(json.slovicka);
-    console.log(json.slovicka);
-    console.log("profil page");
   };
   const correct = (index, value) => {
     let kopie = [...selected_value];
@@ -70,7 +67,7 @@ const Spojovacka = () => {
   return (
     <div>
       {inGame === false && (
-        <div>
+        <div className="m-3">
           <select
             id="volba"
             className="custom-select w-25"
@@ -84,7 +81,7 @@ const Spojovacka = () => {
             <option value="2">Německé</option>
           </select>
           <button
-            className="btn btn-success"
+            className="btn btn-success ml-1"
             onClick={() => {
               setInGame(true);
             }}
@@ -122,7 +119,6 @@ const Spojovacka = () => {
                     onChange={(value) => correct(i, value)}
                     isCorrect={selected_value[i]}
                   />
-                  {console.log(selected_value)}
                 </div>
               );
             })}
@@ -142,8 +138,7 @@ const Spojovacka = () => {
                   setStav(true);
                   let kopie_spatne = [];
                   let kopie_dobre = [];
-                  console.log(kopie_dobre);
-                  console.log(kopie_spatne);
+
                   for (let i = 0; i < words.length; i++) {
                     if (selected_value[i] === true) {
                       kopie_dobre.push(i);

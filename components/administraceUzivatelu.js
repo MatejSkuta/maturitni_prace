@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import UserContext from "./userContext";
 import Row from "./row";
-import router from "next/router";
 
 const AdministraceSlovicek = () => {
   const { user, setUser } = useContext(UserContext);
@@ -13,8 +12,6 @@ const AdministraceSlovicek = () => {
     const response = await fetch(url, { method: "GET" });
     const json = await response.json();
     setUsers(json.data);
-    console.log(typeof json);
-    console.log(json);
   };
   /*useEffect(() => {
     userTable();
@@ -22,25 +19,24 @@ const AdministraceSlovicek = () => {
   useEffect(() => {
     if (user == "admin@email.cz") {
       userTable();
-    } else {
-      //router.push("/");
+      setIsupdate(false);
     }
   }, [isupdate]);
   return (
     <div>
       {users && (
         <div class="table-responsive">
-          <h1>Uživatelé:</h1>
           <table class="table">
             <tr>
-              <th>E-mail</th>
-              <th>Uživatelské jméno</th>
-              <th>Jméno</th>
-              <th>Přijmení</th>
-              <th>Datum registrace</th>
-              <th>Detail</th>
+              <th className="border-top-0">E-mail</th>
+              <th className="border-top-0">Uživatelské jméno</th>
+              <th className="border-top-0">Jméno</th>
+              <th className="border-top-0">Přijmení</th>
+              <th className="border-top-0">Datum registrace</th>
+              <th className="border-top-0">Detail</th>
+              <th className="border-top-0"></th>
             </tr>
-            {console.log(users)}
+
             {users.map((u) => (
               <Row userData={u} setIsupdate={setIsupdate}></Row>
             ))}

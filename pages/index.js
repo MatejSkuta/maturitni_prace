@@ -1,17 +1,32 @@
+import React, { useContext } from "react";
+import UserContext from "../components/userContext";
+
 export default function Home() {
+  const { user, setUser } = useContext(UserContext);
   return (
     <div>
-      <div>
-        <h2>Oběšenec</h2>V této hře si zahrajete známou hru oběšenec nebo-li
-        šibenice.Hra je pouze v angličtině. Zde je úkolem uhodnout slovo dřív
-        než se na obrazovku vykreslí oběšený panáček.Na obrazovce se vykreslí
-        slovíčko, které musí uživatel uhodnout.Akorát že místo písmen jsou
-        prázdné místa,teda kromě prvního písmena , které slouží jako malá
-        nápověda V případě že by si někdo nevěděl se slovíčkem rady, tak si může
-        zobrazit nápovědu, která mu zobrazí český překlad slovíčka, které hádá.
-        Tato hra je především určena k učení nových slovíček která jsou ve
-        slovníku
-        <img src={"./obrazky/obrazek_obesenec.PNG"} />
+      <div class="jumbotron">
+        <h1 class="display-4">WORDGAME</h1>
+        <p class="lead">
+          WORDGAME je aplikace pro procvičování a testování slovíček v němčině a
+          v angličtině. Aplikace obsahuje několik her, které jsou uvedeny níže.
+        </p>
+        {!user && (
+          <>
+            <hr class="my-4" />
+            <p>
+              Stačí pouhá registrace, přihlásit se a to je vše. Po přihlášení
+              máte možnost si zahrát všechny hry. Ve svém profilu si navíc
+              můžete zobrazit statistiky z testů, takže uvidíte zda se lepšíte
+              či nikoliv.
+            </p>
+            <p class="lead">
+              <a class="btn btn-primary btn-lg" href="/login" role="button">
+                Začni hned
+              </a>
+            </p>
+          </>
+        )}
       </div>
       <hr></hr>
       <div>

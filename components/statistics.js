@@ -1,5 +1,6 @@
 import React from "react";
 import Row from "./row";
+import router from "next/router";
 
 const UserStatistics = ({ stat }) => {
   return (

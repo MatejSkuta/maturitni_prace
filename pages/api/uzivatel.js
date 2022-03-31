@@ -4,7 +4,7 @@ const table_name = "Uzivatel";
 const select = async () => {
   const db = knex(connectionString);
   let table = await db(table_name).select();
-  console.log(table);
+
   return table;
 };
 
