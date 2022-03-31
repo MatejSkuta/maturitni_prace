@@ -65,7 +65,7 @@ const AdministraceSlovicek = () => {
         <div className="container">
           <select
             id="volba"
-            className="custom-select w-25"
+            className="custom-select w-25 odsazeni_prvni"
             value={volba}
             onChange={(e) => {
               if (e.target.value === "1") setVolba(1);
@@ -97,10 +97,8 @@ const AdministraceSlovicek = () => {
             }}
           />
           <br></br>
-          <input
-            type="submit"
-            value="Přidat"
-            className="btn btn-primary"
+          <button
+            className="btn btn-primary odsazeni_tlacitka"
             onClick={() => {
               if (cesky != "" || preklad != "") {
                 pridaniSlovicka();
@@ -108,7 +106,9 @@ const AdministraceSlovicek = () => {
                 setPreklad("");
               }
             }}
-          />
+          >
+            přidat
+          </button>
 
           <div class="table-responsive">
             <table class="table">

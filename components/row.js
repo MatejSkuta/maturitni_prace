@@ -14,18 +14,19 @@ const renderUser = (Data, deleteUser) => (
         <button class="btn btn-success">Detail</button>
       </Link>
     </td>
-    {Data.nickname != "admin" && (
+    {Data.nickname != "admin" ? (
       <td>
         <button class="btn btn-danger" onClick={deleteUser}>
           Odstranit
         </button>
       </td>
+    ) : (
+      <td></td>
     )}
   </tr>
 );
 const renderSlovicka = (Data, deleteSlovicka) => (
   <tr>
-    <td>{Data.ID_slovicka}</td>
     <td>{Data.cesky}</td>
     <td>{Data.preklad}</td>
     {Data.ID_jazyka === 1 ? <td>Anglicky</td> : <td>Německy</td>}
