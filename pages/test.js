@@ -101,6 +101,7 @@ const Hadani = () => {
   useEffect(() => {
     if (stav) statistika();
   }, [stav]);
+
   const generateWords = (nastavenypocet) => {
     const selected = data
       .sort(() => Math.random() - 0.5)
