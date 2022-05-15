@@ -33,7 +33,7 @@ function Navigation() {
               {user && (
                 <>
                   <li className="nav-item active">
-                    <a href="/sibenice" className="nav-link">
+                    <a href="/obesenec" className="nav-link">
                       Oběšenec
                     </a>
                   </li>
